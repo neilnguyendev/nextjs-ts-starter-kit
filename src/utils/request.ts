@@ -1,12 +1,16 @@
-// @ts-ignore
+type IHeader = {
+  Accept: string;
+  'Content-Type': string;
+  Authorization?: string;
+};
+
 const request = (url: string, token: string | null, options: object) => {
-  const headers = {
+  const headers: IHeader = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
 
   if (token) {
-    // @ts-ignore
     headers.Authorization = `Bearer ${token}`;
   }
 
