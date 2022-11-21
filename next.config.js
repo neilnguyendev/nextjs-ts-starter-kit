@@ -17,6 +17,10 @@ module.exports = withBundleAnalyzer({
   async rewrites() {
     return [
       {
+        source: '/backend/:path*',
+        destination: `${process.env.BACKEND_URL}/:path*`, // Proxy to Backend
+      },
+      {
         source: '/register',
         destination: '/auth/register',
       },

@@ -1,7 +1,5 @@
 const configs = {
-  api_prod: process.env.API_PROD,
-  api_dev: process.env.API_DEV,
-  api: process.env.WEBSITE || 'http://localhost:4000', // Host for Project
+  api: `${process.env.NEXT_PUBLIC_WEB_URL}/backend`,
   exceptionPath: ['static', '_next'],
   siteName: 'Starter',
   title: 'Next.js Typescript Starter Kit',
