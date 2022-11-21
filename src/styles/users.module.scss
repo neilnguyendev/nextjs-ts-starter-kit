@@ -1,0 +1,11 @@
+// To import to a specific component, please name the file by the format *.module.scss
+.users {
+  h1 {
+    @apply text-blue-700;
+    font-size: 30px;
+  }
+
+  p {
+    color: red;
+  }
+}
