@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import Button from '@/components/Templates/Forms/Button';
 import Input from '@/components/Templates/Forms/Input';
 import authService from '@/services/auth';
+import configs from '@/configs';
 
 type RegisterInputs = {
   email: string;
@@ -26,7 +27,7 @@ export default function RegisterForm() {
     try {
       await authService.requests.register(data);
 
-      await router.push('/login');
+      await router.push(configs.loginPath);
     } catch (error: any) {
       alert(error.message);
     }

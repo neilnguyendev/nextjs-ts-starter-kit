@@ -11,11 +11,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "cookies-next": "^2.1.1",
     "next": "^13.0.3",
+    "next-redux-saga": "^4.1.2",
+    "next-redux-wrapper": "^8.0.0",
     "next-seo": "^5.14.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.39.4"
+    "react-hook-form": "^7.39.4",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.0",
+    "redux-saga": "^1.2.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.0.3",
@@ -24,6 +30,9 @@
     "@types/jest": "^29.2.2",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
+    "@types/react-redux": "^7.1.24",
+    "@types/redux-logger": "^3.0.9",
+    "@types/redux-saga": "^0.10.5",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
     "autoprefixer": "^10.4.13",
@@ -51,6 +60,7 @@
     "postcss": "^8.4.19",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
+    "redux-logger": "^3.0.6",
     "rimraf": "^3.0.2",
     "sass": "^1.56.1",
     "tailwindcss": "^3.2.4",

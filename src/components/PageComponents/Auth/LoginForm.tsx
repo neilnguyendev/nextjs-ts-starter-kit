@@ -22,7 +22,9 @@ export default function LoginForm() {
   } = useForm<LoginInputs>();
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     try {
-      await authService.requests.login(data);
+      const loginResponse = await authService.requests.login(data);
+
+      authService.cookies.setAccessToken(loginResponse.token.accessToken);
 
       await router.push('/users');
     } catch (error: any) {
