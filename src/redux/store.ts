@@ -6,6 +6,7 @@ import logger from 'redux-logger';
 import type { Task } from 'redux-saga';
 import createSagaMiddleware from 'redux-saga';
 
+import type { AppState } from '@/redux/rootReducer';
 import rootReducer from '@/redux/rootReducer';
 import rootSaga from '@/redux/rootSaga';
 
@@ -30,6 +31,6 @@ export const makeStore = () => {
   return store;
 };
 
-export const wrapper = createWrapper(makeStore, {
+export const wrapper = createWrapper<Store<AppState>>(makeStore, {
   debug: true,
 });

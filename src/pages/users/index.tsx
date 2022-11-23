@@ -1,4 +1,4 @@
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useSelector } from 'react-redux';
 
 import MainLayout from '@/components/Layouts/MainLayout';
@@ -7,26 +7,40 @@ import authService from '@/services/auth';
 import styles from '@/styles/users.module.scss';
 import { fetchUsersRequest } from '@/services/users/redux/actions';
 import { wrapper } from '@/redux/store';
+import type { AppState } from '@/redux/rootReducer';
 import type { UsersState } from '@/services/users/redux/types';
+import { END } from 'redux-saga';
 
 function Index() {
-  const router = useRouter();
-  const { error, keyword, limit, list, loaded, total, currentPage } =
-    useSelector<UsersState>((state) => state);
-  console.log('users', list);
+  const { list } = useSelector<AppState, UsersState>(
+    (store: AppState) => store.users
+  );
+
+  console.log('list', list);
 
   return (
     <MainLayout title="List users" description="Here are list of all users">
       <div className={styles.users}>
-        <a
-          className="cursor-pointer"
-          onClick={async () => {
-            authService.cookies.deleteAccessToken();
-            await router.push(configs.loginPath);
-          }}
-        >
-          Logout
-        </a>
+        {list.length > 0 ? (
+          <table className="table-auto">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.email}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No records</p>
+        )}
       </div>
     </MainLayout>
   );
@@ -34,7 +48,7 @@ function Index() {
 
 Index.getInitialProps = wrapper.getInitialPageProps(
   (store) =>
-    ({ req, res }) => {
+    async ({ req, res }) => {
       if (!authService.cookies.hasAccessToken({ req, res })) {
         if (res) {
           res.writeHead(302, { Location: configs.loginPath });
@@ -45,6 +59,14 @@ Index.getInitialProps = wrapper.getInitialPageProps(
       }
 
       store.dispatch(fetchUsersRequest());
+
+      if (res) {
+        store.dispatch(END);
+        await store.sagaTask.toPromise();
+      }
+
+      console.log('aaaa');
+      return { props: {} };
     }
 );
 

@@ -1,5 +1,10 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
+
+import configs from '@/configs';
+import authService from '@/services/auth';
 
 type IProps = {
   title: string;
@@ -7,6 +12,13 @@ type IProps = {
 };
 
 const Header = (props: IProps) => {
+  const router = useRouter();
+  const [isCSR, setIsCSR] = useState(false);
+
+  useEffect(() => {
+    setIsCSR(true);
+  }, []);
+
   const LiComponent = (href: string, text: string): ReactNode => {
     return (
       <li className="mr-6">
@@ -23,11 +35,32 @@ const Header = (props: IProps) => {
   return (
     <>
       <div className="w-full">
-        <div className="border-b border-gray-300 py-3">
+        <div className="flex items-center justify-between border-b border-gray-300 py-3">
           <ul className="flex flex-wrap text-xl">
             {LiComponent('/', 'Home')}
             {LiComponent('/users', 'Users')}
           </ul>
+
+          {isCSR && authService.cookies.hasAccessToken() ? (
+            <a
+              className="cursor-pointer"
+              onClick={async () => {
+                authService.cookies.deleteAccessToken();
+                await router.push(configs.loginPath);
+              }}
+            >
+              Logout
+            </a>
+          ) : (
+            <a
+              className="cursor-pointer"
+              onClick={async () => {
+                await router.push(configs.loginPath);
+              }}
+            >
+              Login
+            </a>
+          )}
         </div>
         <div className="py-8">
           <div className="text-3xl font-bold text-gray-900">{props.title}</div>
