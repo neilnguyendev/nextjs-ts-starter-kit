@@ -2,24 +2,31 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import Button from '@/components/Templates/Forms/Button';
 import Input from '@/components/Templates/Forms/Input';
 import authService from '@/services/auth';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-type LoginInputs = {
-  email: string;
-  password: string;
-};
+const loginSchema = yup.object({
+  email: yup.string().required('Required').min(4, 'Must at least 4 characters'),
+  password: yup
+    .string()
+    .required('Required')
+    .min(6, 'Must at least 6 characters'),
+});
+
+interface LoginInputs extends yup.InferType<typeof loginSchema> {}
 
 export default function LoginForm() {
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginInputs>();
+  } = useForm<LoginInputs>({ resolver: yupResolver(loginSchema) });
+
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     try {
       const loginResponse = await authService.requests.login(data);
@@ -45,8 +52,8 @@ export default function LoginForm() {
         // value={}
         // onChange={}
         // className={}
-        registerHook={register('email', { required: true, minLength: 4 })}
-        error={errors.email ? 'Must at least 4 characters' : undefined}
+        registerHook={register('email')}
+        error={errors.email?.message}
       />
       <Input
         type={'password'}
@@ -59,10 +66,8 @@ export default function LoginForm() {
         // value={}
         // onChange={}
         // className={}
-        registerHook={register('password', { required: true, minLength: 6 })}
-        error={
-          errors.password ? 'Password must at least 6 characters' : undefined
-        }
+        registerHook={register('password')}
+        error={errors.password?.message}
       />
       <div className="flex items-center justify-between">
         <Button submitType={true} text={'Login'} />
