@@ -5,7 +5,7 @@
   <a href="https://reactjs.org/" target="_blank"><img src="https://img.shields.io/badge/React-v18-%238DD6F9.svg?logo=React"></a>
 </p>
 
-_"Next.js gives you the best developer experience with all the features you need for production: hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more. No config needed."_
+Next.js gives you the best developer experience with all the features you need for production: hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more. No config needed.
 
 This project helps you:
 
