@@ -5,8 +5,8 @@ import {
   fetchUsersFailure,
   fetchUsersSuccess,
 } from '@/services/users/redux/actions';
-
 import type { IUser } from '@/services/users/redux/types';
+
 import { LOAD_USERS } from './actionTypes';
 
 function* fetchUsersSaga() {

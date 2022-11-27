@@ -1,5 +1,3 @@
-import type { HYDRATE } from 'next-redux-wrapper';
-
 import type {
   LOAD_USERS,
   LOADED_USERS_FAILURE,
@@ -30,10 +28,6 @@ export interface FetchUsersFailurePayload {
   error: string;
 }
 
-export interface HydrateType {
-  type: typeof HYDRATE;
-}
-
 export interface FetchUsersRequest {
   type: typeof LOAD_USERS;
 }
@@ -47,9 +41,3 @@ export type FetchUsersFailure = {
   type: typeof LOADED_USERS_FAILURE;
   payload: FetchUsersFailurePayload;
 };
-
-export type UsersActions =
-  | HydrateType
-  | FetchUsersRequest
-  | FetchUsersSuccess
-  | FetchUsersFailure;

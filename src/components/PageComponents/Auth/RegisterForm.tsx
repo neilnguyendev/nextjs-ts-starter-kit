@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 
 import Button from '@/components/Templates/Forms/Button';
 import Input from '@/components/Templates/Forms/Input';
-import authService from '@/services/auth';
 import configs from '@/configs';
+import authService from '@/services/auth';
 
 type RegisterInputs = {
   email: string;

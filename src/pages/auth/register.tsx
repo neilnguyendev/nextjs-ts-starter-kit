@@ -1,5 +1,5 @@
-import RegisterForm from '@/components/PageComponents/Auth/RegisterForm';
 import MainLayout from '@/components/Layouts/MainLayout';
+import RegisterForm from '@/components/PageComponents/Auth/RegisterForm';
 
 export default function Register() {
   return (

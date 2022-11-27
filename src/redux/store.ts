@@ -1,13 +1,11 @@
 import { createWrapper } from 'next-redux-wrapper';
 import type { Store } from 'redux';
 import { applyMiddleware, createStore } from 'redux';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import logger from 'redux-logger';
 import type { Task } from 'redux-saga';
 import createSagaMiddleware from 'redux-saga';
 
 import type { AppState } from '@/redux/rootReducer';
-import rootReducer from '@/redux/rootReducer';
+import reducer from '@/redux/rootReducer';
 import rootSaga from '@/redux/rootSaga';
 
 export interface SagaStore extends Store {
@@ -19,10 +17,7 @@ export const makeStore = () => {
   const sagaMiddleware = createSagaMiddleware();
 
   // 2: Add an extra parameter for applying middleware:
-  const store = createStore(
-    rootReducer,
-    applyMiddleware(sagaMiddleware, logger)
-  );
+  const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
   // 3: Run your sagas on server
   (store as SagaStore).sagaTask = sagaMiddleware.run(rootSaga);
@@ -32,5 +27,5 @@ export const makeStore = () => {
 };
 
 export const wrapper = createWrapper<Store<AppState>>(makeStore, {
-  debug: true,
+  // debug: true,
 });

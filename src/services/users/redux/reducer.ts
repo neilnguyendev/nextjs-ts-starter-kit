@@ -1,6 +1,7 @@
 import { HYDRATE } from 'next-redux-wrapper';
+import type { AnyAction } from 'redux';
 
-import type { UsersActions, UsersState } from '@/services/users/redux/types';
+import type { UsersState } from '@/services/users/redux/types';
 
 import {
   LOAD_USERS,
@@ -20,10 +21,10 @@ const initialState: UsersState = {
 };
 
 // eslint-disable-next-line @typescript-eslint/default-param-last,import/no-anonymous-default-export
-export default (state = initialState, action: UsersActions) => {
+export default (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case HYDRATE:
-      return { ...state };
+      return { ...action.payload.users };
     case LOAD_USERS:
       return { ...state, loaded: false };
     case LOADED_USERS_SUCCESS:
