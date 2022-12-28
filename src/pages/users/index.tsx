@@ -8,10 +8,7 @@ import ListUsers from '@/components/PageComponents/Users/ListUsers';
 import type { SagaStore } from '@/redux/store';
 import { wrapper } from '@/redux/store';
 // import authService from '@/services/auth';
-import {
-  fetchUsersRequest,
-  fetchUsersSSR,
-} from '@/services/users/redux/actions';
+import { fetchUsersRequest } from '@/services/users/redux/actions';
 import styles from '@/styles/users.module.scss';
 
 export default function Index() {
@@ -44,7 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     // }
 
     // Get data
-    await store.dispatch(fetchUsersSSR());
+    await store.dispatch(fetchUsersRequest());
     store.dispatch(END);
     await (store as SagaStore).sagaTask?.toPromise();
 
