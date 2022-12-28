@@ -7,22 +7,29 @@ import createSagaMiddleware from 'redux-saga';
 import type { AppState } from '@/redux/rootReducer';
 import reducer from '@/redux/rootReducer';
 import rootSaga from '@/redux/rootSaga';
+import logger from 'redux-logger';
 
 export interface SagaStore extends Store {
   sagaTask?: Task;
 }
 
 export const makeStore = () => {
-  // 1: Create the middleware
+  const listMiddlewares = [];
   const sagaMiddleware = createSagaMiddleware();
+  listMiddlewares.push(sagaMiddleware);
+  if (process.env.NEXT_PUBLIC_REDUX_LOGGER === 'true') {
+    // @ts-ignore
+    listMiddlewares.push(logger);
+  }
 
-  // 2: Add an extra parameter for applying middleware:
-  const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+  const createStoreWithMiddleware = applyMiddleware(...listMiddlewares)(
+    createStore
+  );
 
-  // 3: Run your sagas on server
+  const store = createStoreWithMiddleware(reducer);
+
   (store as SagaStore).sagaTask = sagaMiddleware.run(rootSaga);
 
-  // 4: now return the store:
   return store;
 };
 

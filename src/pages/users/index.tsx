@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { END } from 'redux-saga';
 
 import MainLayout from '@/components/Layouts/MainLayout';
@@ -6,10 +8,19 @@ import ListUsers from '@/components/PageComponents/Users/ListUsers';
 import type { SagaStore } from '@/redux/store';
 import { wrapper } from '@/redux/store';
 // import authService from '@/services/auth';
-import { fetchUsersRequest } from '@/services/users/redux/actions';
+import {
+  fetchUsersRequest,
+  fetchUsersSSR,
+} from '@/services/users/redux/actions';
 import styles from '@/styles/users.module.scss';
 
 export default function Index() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // dispatch(fetchUsersRequest());
+  }, []);
+
   return (
     <MainLayout title="List users" description="Here are list of all users">
       <div className={styles.users}>
@@ -33,7 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     // }
 
     // Get data
-    await store.dispatch(fetchUsersRequest());
+    await store.dispatch(fetchUsersSSR());
     store.dispatch(END);
     await (store as SagaStore).sagaTask?.toPromise();
 
