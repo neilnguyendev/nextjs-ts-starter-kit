@@ -41,7 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     // }
 
     // Get data
-    await store.dispatch(fetchUsersRequest());
+    await store.dispatch(fetchUsersRequest(true));
     store.dispatch(END);
     await (store as SagaStore).sagaTask?.toPromise();
 

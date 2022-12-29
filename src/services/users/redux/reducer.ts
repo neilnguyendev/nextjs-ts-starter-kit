@@ -18,15 +18,18 @@ const initialState: UsersState = {
   limit: 0,
   keyword: '',
   list: [],
+  isSSR: false,
 };
 
 // eslint-disable-next-line @typescript-eslint/default-param-last,import/no-anonymous-default-export
 export default (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case HYDRATE:
-      return { ...action.payload.users };
+      return action.payload.users.isSSR
+        ? { ...action.payload.users }
+        : { ...state };
     case LOAD_USERS:
-      return { ...state, loaded: false };
+      return { ...state, loaded: false, isSSR: action.isSSR };
     case LOADED_USERS_SUCCESS:
       return {
         ...state,

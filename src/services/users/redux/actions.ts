@@ -11,8 +11,9 @@ import type {
   FetchUsersSuccessPayload,
 } from './types';
 
-export const fetchUsersRequest = (): FetchUsersRequest => ({
+export const fetchUsersRequest = (isSSR = false): FetchUsersRequest => ({
   type: LOAD_USERS,
+  isSSR,
 });
 
 export const fetchUsersSuccess = (

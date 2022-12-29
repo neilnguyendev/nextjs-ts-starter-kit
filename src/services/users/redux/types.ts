@@ -17,6 +17,7 @@ export interface UsersState {
   limit: number;
   keyword: string;
   list: IUser[];
+  isSSR: boolean;
 }
 
 export interface FetchUsersSuccessPayload {
@@ -30,6 +31,7 @@ export interface FetchUsersFailurePayload {
 
 export interface FetchUsersRequest {
   type: typeof LOAD_USERS;
+  isSSR: boolean;
 }
 
 export type FetchUsersSuccess = {
