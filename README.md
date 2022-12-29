@@ -1,4 +1,4 @@
-<h1 align="center">Next.js + Typescript + React + Redux Saga + TailwindCSS</h1>
+<h1 align="center">Next.js + Typescript + React + Redux Saga + TailwindCSS + Axios</h1>
 
 <p align="center">
   <a href="https://nextjs.org/" target="_blank"><img src="https://img.shields.io/badge/Next.js-v13-blueviolet.svg"></a>
