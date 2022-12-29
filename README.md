@@ -1,4 +1,4 @@
-<h1 align="center">Next.js + Typescript + React + Redux Saga + TailwindCSS + Axios</h1>
+<h1 align="center">Next.js + Typescript + React + Redux Saga + TailwindCSS</h1>
 
 <p align="center">
   <a href="https://nextjs.org/" target="_blank"><img src="https://img.shields.io/badge/Next.js-v13-blueviolet.svg"></a>
@@ -18,7 +18,8 @@ This project helps you:
 7. Write code better with Typescript, ESLint and Prettier.
 8. Write unit tests with Jest.
 9. Set up a reverse proxy to backend for preventing CORS attacks.
-10. Start developing your web project easily and quickly.
+10. Using Axios to send HTTP request.
+11. Start developing your web project easily and quickly.
 
 Learn more here: https://nextjs.org/docs/getting-started
 
