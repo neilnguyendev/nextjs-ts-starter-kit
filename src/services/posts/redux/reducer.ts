@@ -19,7 +19,7 @@ const initialState: PostsState = {
 };
 
 // eslint-disable-next-line @typescript-eslint/default-param-last
-export default (state = initialState, action: AnyAction) => {
+export default function reducer(state = initialState, action: AnyAction) {
   switch (action.type) {
     case HYDRATE:
       return action.payload.posts.isSSR
@@ -32,4 +32,4 @@ export default (state = initialState, action: AnyAction) => {
     default:
       return state;
   }
-};
+}

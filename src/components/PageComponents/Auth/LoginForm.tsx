@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import type { SubmitHandler } from 'react-hook-form';
@@ -7,7 +8,6 @@ import * as yup from 'yup';
 import Button from '@/components/Templates/Forms/Button';
 import Input from '@/components/Templates/Forms/Input';
 import authService from '@/services/auth';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 const loginSchema = yup.object({
   email: yup.string().required('Required').min(4, 'Must at least 4 characters'),

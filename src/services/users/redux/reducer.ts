@@ -21,8 +21,8 @@ const initialState: UsersState = {
   isSSR: false,
 };
 
-// eslint-disable-next-line @typescript-eslint/default-param-last,import/no-anonymous-default-export
-export default (state = initialState, action: AnyAction) => {
+// eslint-disable-next-line @typescript-eslint/default-param-last
+export default function reducer(state = initialState, action: AnyAction) {
   switch (action.type) {
     case HYDRATE:
       return action.payload.users.isSSR
@@ -46,4 +46,4 @@ export default (state = initialState, action: AnyAction) => {
     default:
       return state;
   }
-};
+}

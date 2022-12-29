@@ -1,31 +1,53 @@
-type IHeader = {
-  Accept: string;
-  'Content-Type': string;
-  Authorization?: string;
-};
+import type { Method } from 'axios';
+import axios from 'axios';
 
-const request = (url: string, token: string | null, options: object) => {
-  const headers: IHeader = {
+import { HttpError } from '@/exceptions/HttpError';
+import { UnauthorizedError } from '@/exceptions/UnauthorizedError';
+import { cookies } from '@/services/auth/cookies';
+
+const request = (url: string, method: Method, options: any = {}) => {
+  const isCSR = typeof window !== 'undefined';
+  const axiosExtraParams = { ...options };
+  let headers: any = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
 
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
+  if (options.token) {
+    headers.Authorization = `Bearer ${options.token}`;
+    delete axiosExtraParams.token;
+  } else if (isCSR) {
+    const accessToken = cookies.getAccessToken();
+    if (accessToken) {
+      headers.Authorization = `Bearer ${cookies.getAccessToken()}`;
+    }
   }
 
-  return fetch(url, {
+  if (options.headers) {
+    headers = { ...headers, ...options.headers };
+    delete axiosExtraParams.headers;
+  }
+
+  return axios({
+    url,
+    method,
     headers,
-    ...options,
-  }).then(async (response) => {
-    const responseBody = await response.json();
-
-    if (response.status >= 400) {
-      throw new Error(responseBody.message || 'Something went wrong');
-    }
-
-    return responseBody;
-  });
+    ...axiosExtraParams,
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        // Auto redirect
+        // if (isCSR) {
+        //   window.location.href = '/';
+        // }
+        throw new UnauthorizedError();
+      } else {
+        throw new HttpError(error.response.data?.message);
+      }
+    });
 };
 
 export default request;
