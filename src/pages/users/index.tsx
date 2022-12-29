@@ -1,24 +1,20 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { END } from 'redux-saga';
-
 import MainLayout from '@/components/Layouts/MainLayout';
-import ListUsers from '@/components/PageComponents/Users/ListUsers';
 import ListPosts from '@/components/PageComponents/Users/ListPosts';
+import ListUsers from '@/components/PageComponents/Users/ListUsers';
 // import configs from '@/configs';
-import type { SagaStore } from '@/redux/store';
 import { wrapper } from '@/redux/store';
+import { fetchPosts } from '@/services/posts/redux/actions';
 // import authService from '@/services/auth';
 import { fetchUsersRequest } from '@/services/users/redux/actions';
 import styles from '@/styles/users.module.scss';
-import { fetchPosts } from '@/services/posts/redux/actions';
 
 export default function Index() {
   const dispatch = useDispatch();
-
   useEffect(() => {
     // dispatch(fetchUsersRequest());
-    // dispatch(fetchPosts());
+    dispatch(fetchPosts());
   }, []);
 
   return (
@@ -48,9 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     // Get data
     await store.dispatch(fetchUsersRequest(true));
-    await store.dispatch(fetchPosts(true));
-    store.dispatch(END);
-    await (store as SagaStore).sagaTask?.toPromise();
+    // await store.dispatch(fetchPosts(true));
 
     return { props: {} };
   }
@@ -60,7 +54,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
 // export const getStaticProps = wrapper.getStaticProps((store) => async () => {
 //   console.log('getStaticProps');
 //
-//   await store.dispatch(fetchUsersRequest());
+//   await store.dispatch(fetchUsersRequest(true));
+//   await store.dispatch(fetchPosts(true));
 //
 //   return { props: {} };
 // });

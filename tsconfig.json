@@ -35,6 +35,8 @@
     "isolatedModules": true,
     "incremental": true,
 
+    "typeRoots": ["node_modules/yup"],
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
